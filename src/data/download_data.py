@@ -16,7 +16,7 @@ def download_data():
     print("Downloading dataset...")
     
     # Sample dataset: It would be replaced with the actual dataset with earthquake tweets.    
-    df = pd.read_jason(DATA_URL_ADDRESS)
+    df = pd.read_json(DATA_URL_ADDRESS)
     
     # converting json format into csv.   
     df.to_csv(SAVE_DATA_PATH, index=False)
