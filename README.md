@@ -1,6 +1,6 @@
-# SAR Social Media Analyzer 🚨
+# Search and Rescue (SAR) Social Media Analyzer 
 
-## 📌 Overview
+##  Overview
 
 This project builds an end-to-end data science system to detect and analyze emergency help requests in earthquake-related social media data.
 
@@ -13,7 +13,7 @@ The system:
 
 ---
 
-## 🎯 Objectives
+## Objectives
 
 * Detect potential **search & rescue (SAR)** requests in tweets
 * Visualize patterns in disaster-related communication
@@ -21,14 +21,14 @@ The system:
 
 ---
 
-## 📊 Data Source
+##  Data Source
 
 The dataset is automatically downloaded from a public online source (no login required).
 It contains earthquake-related tweets labeled for humanitarian categories.
 
 ---
 
-## ⚙️ How to Run (Docker)
+##  How to Run (Docker)
 
 ### 1. Build the image
 
@@ -50,7 +50,7 @@ http://localhost:8501
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 * `data/` → raw and processed datasets
 * `src/` → data processing and modeling code
@@ -59,7 +59,7 @@ http://localhost:8501
 
 ---
 
-## 🚀 Features (Planned)
+##  Features (Planned)
 
 * Data ingestion pipeline
 * Data cleaning & preprocessing
@@ -68,13 +68,13 @@ http://localhost:8501
 
 ---
 
-## ⚠️ Notes
+##  Notes
 
 * Data is downloaded automatically at runtime
 * No manual setup or login required
 
 ---
 
-## 👨‍💻 Author
+##  Author:
 
 Hamid Majidi Balanji
