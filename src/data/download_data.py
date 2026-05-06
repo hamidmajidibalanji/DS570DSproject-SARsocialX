@@ -4,6 +4,8 @@
 
 import os  
 import pandas as pd
+from datasets import load_dataset
+
 
 # Sample dataset to check whether dataset donwloading works.   
 # DATA_URL_ADDRESS = "https://raw.githubusercontent.com/selva86/datasets/master/newsgroups.json"   
@@ -18,7 +20,7 @@ def download_data():
     print("Downloading HumAID dataset...")
     
     # Sample dataset: It would be replaced with the actual dataset with earthquake tweets.    
-    dataset = load_dataset("Firoj/HumAID", split="train")
+    dataset = load_dataset("Firoj/HumAID", split="train", trust_remote_code=True)
 
     df = pd.DataFrame(dataset)  
     
