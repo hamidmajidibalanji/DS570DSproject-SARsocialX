@@ -3,8 +3,8 @@ import pandas as pd
 import re   
 
 
-INPUT_FILE_PATH = 'data/raw/humid.csv'
-OUTPUT_FILE_PATH = 'data/processed/humid_cleaned.csv'     
+INPUT_FILE_PATH = '~/ds570PADSProject/data/raw/humaid.csv'
+OUTPUT_FILE_PATH = '~/ds570PADSProject/data/raw/processed_humaid.csv'     
 
 
 
