@@ -1,10 +1,11 @@
 # Dataset preprocessing and manipulation   
 import pandas as pd   
 import re   
+import os
 
 
-INPUT_FILE_PATH = '~/ds570PADSProject/data/raw/humaid.csv'
-OUTPUT_FILE_PATH = '~/ds570PADSProject/data/raw/processed_humaid.csv'     
+INPUT_FILE_PATH = '~/ds570PADSProject/data/raw/disaster_tweets.csv'
+OUTPUT_FILE_PATH = '~/ds570PADSProject/data/raw/processed_disaster_tweets.csv'     
 
 
 
@@ -20,6 +21,8 @@ def clean_data(text):
 
 
 def preprocess_data():
+    os.makedirs("data/processed", exist_ok=True)
+    
     df = pd.read_csv(INPUT_FILE_PATH)    
     
     print("Original Dataset shape:", df.shape)   
@@ -27,9 +30,20 @@ def preprocess_data():
     # clean
     df["cleaned_text"] = df["tweet_text"].astype(str).apply(clean_data)    
     
+    
+    # Simple heuristic labels
+    emergency_keywords = [
+        "help",
+        "emergency",
+        "urgent",
+        "rescue",
+        "trapped",
+        "hospital",
+    ]
+    
     # Binary label (SAR vs Non_SAR)  
-    df["label"] = df["class_label"].apply(
-        lambda x: 1 if x in ["requests_or_urgent_needs", "missing_or_found_people"] else 0
+    df["label"] = df["class_data"].apply(
+        lambda x: 1 if any(k in x for k in emergency_keywords) else 0
     )
     
     
@@ -39,7 +53,9 @@ def preprocess_data():
     print("Processed Dataset shape:", df.shape)   
     
     # Exporrt the cleaned dataset as csv file and save it in the output path    
-    df.to_csv(OUTPUT_FILE_PATH, index=False)   
+    df.to_csv(OUTPUT_FILE_PATH, index=False)  
+    
+    print(f"Saved cleaned dataset to: {OUTPUT_FILE_PATH}") 
     
     
 if __name__ == "__main__":
