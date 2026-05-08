@@ -4,16 +4,19 @@ import re
 import os
 
 
-INPUT_FILE_PATH = '~/ds570PADSProject/data/raw/disaster_tweets.csv'
-OUTPUT_FILE_PATH = '~/ds570PADSProject/data/raw/processed_disaster_tweets.csv'     
+INPUT_FILE_PATH = 'data/raw/train.csv'
+OUTPUT_FILE_PATH = 'data/processed/processed_disaster_tweets.csv'     
 
 
 
-def clean_data(text):
-    text = text.lower()      
+def clean_text(text):    
+    text = str(text).lower()    
+      
     text = re.sub(r"http\S+", "", text)     # remove URLs    
-    text = re.sub(r"@\w+", "", text)        # remove mentions    
+    text = re.sub(r"@\w+", "", text)        # remove mentions   
+    text = re.sub(r"#", "", text)
     text = re.sub(r"[^a-zA-Z\s]", "", text)  # remove special chars   
+    
     return text.strip()    
 
 
@@ -27,35 +30,23 @@ def preprocess_data():
     
     print("Original Dataset shape:", df.shape)   
     
-    # clean
-    df["cleaned_text"] = df["tweet_text"].astype(str).apply(clean_data)    
+    # clean tweets
+    df["clean_text"] = df["text"].apply(clean_text)   
     
     
-    # Simple heuristic labels
-    emergency_keywords = [
-        "help",
-        "emergency",
-        "urgent",
-        "rescue",
-        "trapped",
-        "hospital",
-    ]
+    # Real labels
+    df["label"] = df["target"]
+
+    df = df[["clean_text", "label"]]
     
-    # Binary label (SAR vs Non_SAR)  
-    df["label"] = df["class_data"].apply(
-        lambda x: 1 if any(k in x for k in emergency_keywords) else 0
-    )
-    
-    
-    # Drop empty rows   
-    df = df[df["cleaned_text"].str.len() > 5]
-    
-    print("Processed Dataset shape:", df.shape)   
-    
-    # Exporrt the cleaned dataset as csv file and save it in the output path    
-    df.to_csv(OUTPUT_FILE_PATH, index=False)  
-    
-    print(f"Saved cleaned dataset to: {OUTPUT_FILE_PATH}") 
+    # Remove empty tweets
+    df = df[df["clean_text"].str.len() > 5]
+
+    print("Processed shape:", df.shape)
+
+    df.to_csv(OUTPUT_FILE_PATH, index=False)
+
+    print(f"Saved cleaned dataset to: {OUTPUT_FILE_PATH}")
     
     
 if __name__ == "__main__":
