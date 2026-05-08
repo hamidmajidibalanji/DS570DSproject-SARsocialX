@@ -13,8 +13,9 @@ import pandas as pd
 SAVE_DATA_PATH = "data/raw/disaster_tweets.csv" 
 DATA_URL_ADDRESS = (
     "https://raw.githubusercontent.com/"
-    "thepanacealab/covid19_twitter/master/dailies/2020_07_08/2020_07_08_clean-dataset.csv"
-    )  
+    "selva86/datasets/master/newsgroups.json"
+)
+
 
 
 # Definition of the function to download the data   
@@ -28,11 +29,12 @@ def download_data():
 
     df = pd.read_csv(DATA_URL_ADDRESS)  
     
+    
     # Keep only text column
-    df = df[["text"]]
+    df = df[["content"]]  
     
     # Rename column
-    df.rename(columns={"text": "tweet_text"}, inplace=True)
+    df.rename(columns={"content": "tweet_text"}, inplace=True)
     
     print("Dataset size:", len(df))   
     
