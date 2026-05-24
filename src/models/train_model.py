@@ -68,7 +68,7 @@ def evaluate_model(model, X_test, y_test, model_name):
         "Accuracy": accuracy,
         "Precision": precision,
         "Recall": recall,
-        "F1-Score": f1
+        "F1": f1
     }
 
 
