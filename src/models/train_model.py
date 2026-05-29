@@ -12,6 +12,8 @@ from sklearn.linear_model import LogisticRegression
 
 from sklearn.svm import LinearSVC   
 
+from skleran.model_selection import GridSearchCV    
+
 from sklearn.metrics import ( 
     classification_report, 
     accuracy_score,
@@ -147,6 +149,54 @@ def train_model():
     )
     
     results.append(svm_results)
+    
+    #---------------------------------------------------------------
+    # GridSearchCV for Hyperparameter Tuning of Logistic Regression
+    #---------------------------------------------------------------
+    -----------------------------
+
+    print("\nTraining SVM with GridSearchCV (additional experiment)...")
+
+    svm_pipeline = Pipeline([
+        ("tfidf", TfidfVectorizer(stop_words='english')),
+        ("svm", LinearSVC())
+    ])
+
+    param_grid = {
+        "tfidf__max_features": [3000, 5000, 8000],
+        "tfidf__ngram_range": [(1, 1), (1, 2)],
+        "svm__C": [0.1, 1, 10]
+    }
+
+    grid_search_svm = GridSearchCV(
+        svm_pipeline,
+        param_grid=param_grid,
+        cv=5,
+        scoring="f1",
+        n_jobs=-1,
+        verbose=2
+    )
+
+    grid_search_svm.fit(X_train, y_train)
+
+    print("\nBest parameters for GridSearch SVM:")
+    print(grid_search_svm.best_params_)
+
+    best_svm = grid_search_svm.best_estimator_
+
+    joblib.dump(
+        best_svm,
+        os.path.join(MODELS_DIR, "svm_gridsearch.pkl")
+    )
+
+    svm_grid_results = evaluate_model(
+        best_svm,
+        X_test,
+        y_test,
+        "SVM (GridSearchCV)"
+    )
+
+    results.append(svm_grid_results)
     
     # --------------------------------------------------
     #  Save Comparison REsults   
