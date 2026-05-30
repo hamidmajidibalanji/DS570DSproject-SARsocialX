@@ -85,7 +85,30 @@ def run_grid_search():
         scoring="f1"
     )
     
-    grid_search.fit(X_train, y_train)  
+    grid_search.fit(X_train, y_train) 
+    
+    # --------------------------------------------------
+    # Save Grid Search Results
+    # --------------------------------------------------
+
+    os.makedirs("outputs", exist_ok=True)
+
+    results_df = pd.DataFrame(grid_search.cv_results_)
+
+    results_df.to_csv(
+        "outputs/grid_search_results.csv",
+        index=False
+    )
+
+    print("\nGrid Search results saved to outputs/grid_search_results.csv")
+
+    print("\nBest Parameters:")
+
+    print(grid_search.best_params_)
+
+    print("\nBest CV Score:")
+
+    print(grid_search.best_score_) 
     
     print("\nBest Parameters:")  
     
