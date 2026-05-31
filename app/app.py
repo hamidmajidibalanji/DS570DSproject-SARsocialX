@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import joblib
+from src.models.predict import predict_text
+
 
 st.title("SAR Social Media Analyzer")
 
@@ -12,7 +14,11 @@ MODEL_OPTIONS = {
 
 selected_model = st.selectbox(
     "Choose Model",
-    list(MODEL_OPTIONS.keys())
+    [
+        "Logistic Regression",
+        "SVM",
+        "Tuned SVM"
+    ]
 )
 
 tweet = st.text_area(
@@ -21,16 +27,14 @@ tweet = st.text_area(
 
 if st.button("Analyze"):
 
-    model = joblib.load(
-        MODEL_OPTIONS[selected_model]
+    prediction = predict_text(
+        tweet,
+        selected_model
     )
-
-    prediction = model.predict([tweet])[0]
 
     st.success(
         f"Prediction: {prediction}"
     )
-    
     
 st.header("Model Comparison")
 

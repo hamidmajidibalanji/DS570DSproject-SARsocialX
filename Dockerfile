@@ -6,4 +6,6 @@ COPY . .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["streamlit", "run", "app/app.py", "--server.address=0.0.0.0"]
+ENV PYTHONPATH=/app
+
+CMD ["streamlit", "run", "app/app.py", "--server.address=0.0.0.0", "--server.port=8501"]

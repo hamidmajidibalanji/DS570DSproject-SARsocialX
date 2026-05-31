@@ -1,9 +1,46 @@
 import joblib
 
-def predict_text(text, model_path):
+def predict_text(text, model_name):
 
-    model = joblib.load(model_path)
+    if model_name == "Tuned SVM":
 
-    prediction = model.predict([text])
+        model = joblib.load(
+            "models/best_svm_model.pkl"
+        )
 
-    return prediction[0]
+        prediction = model.predict(
+            [text]
+        )[0]
+
+    else:
+
+        vectorizer = joblib.load(
+            "models/tfidf_vectorizer.pkl"
+        )
+
+        tweet_vector = vectorizer.transform(
+            [text]
+        )
+
+        if model_name == "SVM":
+
+            model = joblib.load(
+                "models/svm_model.pkl"
+            )
+
+        elif model_name == "Logistic Regression":
+
+            model = joblib.load(
+                "models/logistic_regression.pkl"
+            )
+
+        else:
+            raise ValueError(
+                f"Unknown model: {model_name}"
+            )
+
+        prediction = model.predict(
+            tweet_vector
+        )[0]
+
+    return prediction
