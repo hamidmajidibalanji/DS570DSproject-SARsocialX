@@ -9,7 +9,8 @@ st.title("SAR Social Media Analyzer")
 MODEL_OPTIONS = {
     "Tuned SVM": "models/best_svm_model.pkl",
     "SVM": "models/svm_model.pkl",
-    "Logistic Regression": "models/logistic_regression.pkl"
+    "Logistic Regression": "models/logistic_regression.pkl",
+    "Naive Bayes": "models/naive_bayes_model.pkl"
 }
 
 selected_model = st.selectbox(
@@ -17,7 +18,8 @@ selected_model = st.selectbox(
     [
         "Logistic Regression",
         "SVM",
-        "Tuned SVM"
+        "Tuned SVM",
+        "Naive Bayes"
     ]
 )
 

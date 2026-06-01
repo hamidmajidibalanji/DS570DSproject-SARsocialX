@@ -11,6 +11,24 @@ def predict_text(text, model_name):
         prediction = model.predict(
             [text]
         )[0]
+        
+    elif model_name == "Naive Bayes":
+
+        model = joblib.load(
+            "models/naive_bayes_model.pkl"
+        )
+
+        vectorizer = joblib.load(
+            "models/tfidf_vectorizer_nb.pkl"
+        )
+
+        tweet_vector = vectorizer.transform(
+            [text]
+        )
+
+        prediction = model.predict(
+            tweet_vector
+        )[0]    
 
     else:
 
