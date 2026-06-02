@@ -9,12 +9,17 @@ from sklearn.model_selection import train_test_split
 
 from sklearn.feature_extraction.text import TfidfVectorizer   
 
+from src.evaluation.save_metrics import save_metrics
+
 from sklearn.naive_bayes import MultinomialNB  
 
 from sklearn.metrics import (
     classification_report,
     confusion_matrix,
-    accuracy_score      
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score    
 )
 
 INPUT_PATH = "data/processed/processed_disaster_tweets.csv"
@@ -67,6 +72,24 @@ def train_naive_bayes():
     print("\nClassification Report:\n", classification_report(y_test, predictions))
     
     accuracy = accuracy_score(y_test, predictions)   
+    
+    precision = precision_score(
+        y_test,
+        predictions,
+        average="weighted"
+    )
+    
+    recall = recall_score(y_test, predictions, average="weighted")   
+    
+    f1 = f1_score(y_test, predictions, average="weighted")  
+     
+    save_metrics(
+        "Naive Bayes",
+        accuracy,
+        precision,
+        recall,
+        f1
+    )
     
     print(
         f"\nAccuracy: {accuracy:.4f}"

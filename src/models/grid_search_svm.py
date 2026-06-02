@@ -19,6 +19,15 @@ from sklearn.svm import LinearSVC
 
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score   
 
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score
+)
+
+from src.evaluation.save_metrics import save_metrics    
+
 
 INPUT_PATH = "data/processed/processed_disaster_tweets.csv"
 
@@ -120,7 +129,38 @@ def run_grid_search():
     
     best_model = grid_search.best_estimator_  
     
-    predictions = best_model.predict(X_test)  
+    predictions = best_model.predict(X_test) 
+    
+    accuracy = accuracy_score(
+        y_test,
+        predictions
+    )
+
+    precision = precision_score(
+        y_test,
+        predictions,
+        average="weighted"
+    )
+
+    recall = recall_score(
+        y_test,
+        predictions,
+        average="weighted"
+    )
+
+    f1 = f1_score(
+        y_test,
+        predictions,
+        average="weighted"
+    )
+    
+    save_metrics(
+        "Tuned SVM",
+        accuracy,
+        precision,
+        recall,
+        f1
+    )
     
     print("\nFinal Test Results:")  
     

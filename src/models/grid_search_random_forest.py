@@ -18,10 +18,15 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.pipeline import Pipeline  
 
 from sklearn.metrics import (
-    classification_report,
-    confusion_matrix,
-    accuracy_score
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score
 )
+
+from src.evaluation.save_metrics import save_metrics
+
+
 
 INPUT_PATH = "data/processed/processed_disaster_tweets.csv"
 
@@ -121,6 +126,39 @@ def run_grid_search():
 
     predictions = best_model.predict(
         X_test
+    )
+    
+    
+    
+    accuracy = accuracy_score(
+        y_test,
+        predictions
+    )
+
+    precision = precision_score(
+        y_test,
+        predictions,
+        average="weighted"
+    )
+
+    recall = recall_score(
+        y_test,
+        predictions,
+        average="weighted"
+    )
+
+    f1 = f1_score(
+        y_test,
+        predictions,
+        average="weighted"
+    )
+
+    save_metrics(
+        "Tuned Random Forest",
+        accuracy,
+        precision,
+        recall,
+        f1
     )
 
     print("\nClassification Report:")

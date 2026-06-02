@@ -12,10 +12,9 @@ from sklearn.linear_model import LogisticRegression
 
 from sklearn.svm import LinearSVC   
 
-from skleran.model_selection import GridSearchCV    
+from sklearn.model_selection import GridSearchCV  
 
 from sklearn.metrics import ( 
-    classification_report, 
     accuracy_score,
     precision_score,
     recall_score,
@@ -25,6 +24,7 @@ from sklearn.metrics import (
    
 from sklearn.pipeline import Pipeline
 
+from src.evaluation.save_metrics import save_metrics
 
 
 
@@ -40,31 +40,51 @@ os.makedirs(MODELS_DIR, exist_ok=True)
 
 
 def evaluate_model(model, X_test, y_test, model_name):
-    
-    predictions = model.predict(X_test)  
-    
+
+    predictions = model.predict(X_test)
+
     accuracy = accuracy_score(y_test, predictions)
-    precision = precision_score(y_test, predictions)
-    recall = recall_score(y_test, predictions)
-    f1 = f1_score(y_test, predictions) 
-    
-    
-    
-    
+
+    precision = precision_score(
+        y_test,
+        predictions,
+        average="weighted"
+    )
+
+    recall = recall_score(
+        y_test,
+        predictions,
+        average="weighted"
+    )
+
+    f1 = f1_score(
+        y_test,
+        predictions,
+        average="weighted"
+    )
+
     print("\n")
-    print("=" * 50)  
-    print(f"{model_name} RESULTS")  
-    print("=" * 50)  
-    
+    print("=" * 50)
+    print(f"{model_name} RESULTS")
+    print("=" * 50)
+
     print(f"Accuracy: {accuracy:.4f}")
     print(f"Precision: {precision:.4f}")
     print(f"Recall: {recall:.4f}")
     print(f"F1-Score: {f1:.4f}")
-    
+
     print("\nClassification Report:")
     print(classification_report(y_test, predictions))
-    
-    
+
+    # Save metrics to results/model_comparison.csv
+    save_metrics(
+        model_name,
+        accuracy,
+        precision,
+        recall,
+        f1
+    )
+
     return {
         "Model": model_name,
         "Accuracy": accuracy,
@@ -124,7 +144,10 @@ def train_model():
         "Logistic Regression")
     
     
-    results.append(lr_results)  
+    results.append(lr_results)
+    
+    
+      
     
     # --------------------------------------------------
     #  Linear SVM
@@ -159,10 +182,10 @@ def train_model():
     
     os.makedirs("outputs", exist_ok=True)   
     
-    results_df.to_csv(
-        "outputs/model_comparison.csv", 
-        index=False
-    )
+    #results_df.to_csv(
+    #    "outputs/model_comparison.csv", 
+    #    index=False
+    #)
     
     
     print("\nSaved model comparison results.")

@@ -21,6 +21,16 @@ MODEL_PATH = "models/random_forest.pkl"
 
 VECTORIZER_PATH = "models/tfidf_vectorizer_rf.pkl"
 
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score
+)
+
+from src.evaluation.save_metrics import save_metrics
+
+
 
 def train_random_forest():
     
@@ -56,6 +66,38 @@ def train_random_forest():
     
     predictions = model.predict(X_test_tfidf)  
     
+    accuracy = accuracy_score(
+        y_test,
+        predictions
+    )
+
+    precision = precision_score(
+        y_test,
+        predictions,
+        average="weighted"
+    )
+
+    recall = recall_score(
+        y_test,
+        predictions,
+        average="weighted"
+    )
+
+    f1 = f1_score(
+        y_test,
+        predictions,
+        average="weighted"
+    )
+
+    save_metrics(
+        "Random Forest",
+        accuracy,
+        precision,
+        recall,
+        f1
+    )
+
+
     
     print(classification_report(y_test, predictions))   
     
