@@ -33,7 +33,7 @@ def save_metrics(
             existing["Model"] != model_name
         ]
         
-        updated = pd.concar(
+        updated = pd.concat(
             [existing, new_row],
             ignore_index=True
         )

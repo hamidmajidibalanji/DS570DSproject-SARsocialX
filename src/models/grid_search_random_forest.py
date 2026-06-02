@@ -19,6 +19,8 @@ from sklearn.pipeline import Pipeline
 
 from sklearn.metrics import (
     accuracy_score,
+    classification_report,
+    confusion_matrix,
     precision_score,
     recall_score,
     f1_score
