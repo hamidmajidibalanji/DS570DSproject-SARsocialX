@@ -30,6 +30,17 @@ def predict_text(text, model_name):
             tweet_vector
         )[0]  
         
+        
+    elif model_name == "Random Forest":
+
+        model = joblib.load(
+            "models/random_forest.pkl"
+        )
+
+        prediction = model.predict(
+            [text]
+        )[0]          
+        
     elif model_name == "Tuned Random Forest":
 
         model = joblib.load(
