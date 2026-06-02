@@ -33,13 +33,21 @@ def predict_text(text, model_name):
         
     elif model_name == "Random Forest":
 
+        vectorizer = joblib.load(
+            "models/tfidf_vectorizer_rf.pkl"
+     )
+
         model = joblib.load(
             "models/random_forest.pkl"
         )
 
-        prediction = model.predict(
+        tweet_vector = vectorizer.transform(
             [text]
-        )[0]          
+        )
+
+        prediction = model.predict(
+            tweet_vector
+        )[0]
         
     elif model_name == "Tuned Random Forest":
 
