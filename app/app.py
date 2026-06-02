@@ -7,10 +7,24 @@ from src.models.predict import predict_text
 st.title("SAR Social Media Analyzer")
 
 MODEL_OPTIONS = {
-    "Tuned SVM": "models/best_svm_model.pkl",
-    "SVM": "models/svm_model.pkl",
-    "Logistic Regression": "models/logistic_regression.pkl",
-    "Naive Bayes": "models/naive_bayes_model.pkl"
+
+    "Logistic Regression":
+        "models/logistic_regression.pkl",
+
+    "SVM":
+        "models/svm_model.pkl",
+
+    "Tuned SVM":
+        "models/best_svm_model.pkl",
+
+    "Naive Bayes":
+        "models/naive_bayes_model.pkl",
+
+    "Random Forest":
+        "models/random_forest.pkl",
+
+    "Tuned Random Forest":
+        "models/best_random_forest.pkl"
 }
 
 selected_model = st.selectbox(
@@ -19,7 +33,9 @@ selected_model = st.selectbox(
         "Logistic Regression",
         "SVM",
         "Tuned SVM",
-        "Naive Bayes"
+        "Naive Bayes",
+        "Random Forest",
+        "Tuned Random Forest"
     ]
 )
 
