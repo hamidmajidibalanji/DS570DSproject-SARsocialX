@@ -1,0 +1,7 @@
+Model,Accuracy,Precision,Recall,F1
+Tuned SVM,0.7963,0.7999,0.7963,0.7927
+Logistic Regression,0.7957,0.7991,0.7957,0.7921
+Naive Bayes,0.7871,0.7908,0.7871,0.783
+Tuned Random Forest,0.7832,0.7825,0.7832,0.7818
+Random Forest,0.7825,0.7829,0.7825,0.7801
+SVM,0.7582,0.7573,0.7582,0.7574

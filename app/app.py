@@ -102,3 +102,20 @@ try:
 
 except:
     pass 
+
+st.header("Final Model Evaluation")
+
+try:
+    st.subheader("Final Results Table")
+    final_results = pd.read_csv("results/final_results_table.csv")
+    st.dataframe(final_results, use_container_width=True)
+
+    st.subheader("Model Comparison Based on F1-score")
+    st.image("results/model_comparison_f1.png")
+
+    st.subheader("Confusion Matrix - Tuned SVM")
+    st.image("results/confusion_matrix_tuned_svm.png")
+
+except Exception as e:
+    st.warning("Final evaluation files not found.")
+    st.code(str(e))
