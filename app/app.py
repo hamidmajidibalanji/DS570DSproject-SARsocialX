@@ -59,10 +59,46 @@ st.header("Model Comparison")
 try:
 
     results = pd.read_csv(
-        "outputs/model_comparison.csv"
+        "results/model_comparison.csv"
     )
 
-    st.dataframe(results)
+    st.dataframe(results, use_container_width=True)
 
 except:
     st.warning("No comparison results found.")
+    
+try:
+
+    best_model = results.loc[
+        results["F1"].idxmax()
+    ]
+
+    st.success(
+        f"Best Model: {best_model['Model']} "
+        f"(F1 = {best_model['F1']:.4f})"
+    )
+
+except:
+    pass   
+
+st.subheader("Performance Metrics")
+
+try:
+
+    metrics_df = results.set_index(
+        "Model"
+    )
+
+    st.bar_chart(
+        metrics_df[
+            [
+                "Accuracy",
+                "Precision",
+                "Recall",
+                "F1"
+            ]
+        ]
+    )
+
+except:
+    pass 
