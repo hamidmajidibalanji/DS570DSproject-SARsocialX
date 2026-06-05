@@ -6,9 +6,6 @@ __pycache__/
 venv/
 .env/
 
-# Data (important for your project)
-data/raw/*
-data/processed/*
 
 # OS files
 .DS_Store
